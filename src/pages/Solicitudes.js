@@ -28,9 +28,9 @@ const Tabla = [
         Estado:'aprovado' }
   ];
 
-export default function Solicitud() {
+export default function Solicitudes() {
     return (
-        <div>
+        <div className='solicitudes'>
                   <TableContainer>
         <Table>
           <TableHead>

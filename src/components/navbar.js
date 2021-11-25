@@ -2,31 +2,46 @@ import React, { useState } from 'react'
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { Link } from 'react-router-dom';
-
+import Sidebard from './Sidebard';
+import './Navbar.css';
+import {IconContext} from 'react-icons';
 
 function Navbar() {
-    const [Sidebar, SetSidebar] =  useState(false)
-    const showSidebar = () => {
-        SetSidebar(!Sidebar)
-     }
+    const [sidebar, SetSidebar] = useState(false);
+    const showSidebar = () =>  SetSidebar(!sidebar);
+       
+    
     return (
         <>
-            <div className="Navbar">
+        <IconContext.Provider value={{color:'#000000'}}>
+            <div className="navbar">
                 < Link to="#" className='menu-barra'>
                     <FaIcons.FaBars onClick={showSidebar} />
                 </Link>
             </div>
-            <nav className={Sidebar ? 'Nav-menu Active' : 'Nav-menu'}>
-                <ul className='Nav-menu-items'>
-                    <li className="Navbar-toggle">
+            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+                <ul className='nav-menu-items' onClick={showSidebar}>
+                    <li className="navbar-toggle">
                         <Link to="#" className='menu-barra'>
-                            <AiIcons.AiOutlineClose/>
+                            <AiIcons.AiOutlineClose />
                         </Link>
                     </li>
+                    {Sidebard.map((item, index) => {
+                        return (
+                            <li key={index} className={item.cName}>
+                                <Link to={item.path} >
+                                    {item.icon}
+                                    <span>{item.title}</span>
+                                </Link>
+                            </li>
+                        );
+                    })}
+                    
                 </ul>
             </nav>
+            </IconContext.Provider>
         </>
-    )
+    );
 }
 
 export default Navbar
