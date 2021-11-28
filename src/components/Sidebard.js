@@ -1,7 +1,7 @@
 import React from 'react'
 import * as FiIcons from 'react-icons/fi';
 
- const Sidebard = [
+const Sidebard = [
     {
         title: 'Solicitudes',
         path: '/Solicitudes',
@@ -12,19 +12,19 @@ import * as FiIcons from 'react-icons/fi';
     },
     {
         title: 'Nueva Solicitud',
-        path: '/NSolicitud',
+        path: '/NSolicitudes',
         icon: <FiIcons.FiUserPlus />,
         cName: 'nav-text'
 
     },
     {
         title: 'Aprobar Solicitud',
-        path: '/ASolicitud',
+        path: '/aprobar',
         icon: <FiIcons.FiCheckSquare />,
         cName: 'nav-text'
 
     }
-    
+
 
 ]
 

@@ -1,37 +1,37 @@
 import React from 'react'
-import {TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
 
 const Tabla = [
-    {
-      Identificador: '13579',
-      Fecha:'354634',
-      Nombre:'brayan',
-      PresupuestoAS:'12234',
-      Responsable:'skjdhf',
-      Presupuesto: '734625',
-      Estado:'aprovado' },
-      {
-      Identificador: '13579',
-      Fecha:'354634',
-      Nombre:'brayan',
-      PresupuestoAS:'12234',
-      Responsable:'skjdhf',
-      Presupuesto: '734625',
-      Estado:'aprovado' },
-      {
-        Identificador: '13579',
-        Fecha:'354634',
-        Nombre:'brayan',
-        PresupuestoAS:'12234',
-        Responsable:'skjdhf',
-        Presupuesto: '734625',
-        Estado:'aprovado' }
-  ];
+  {
+    Identificador: '1234',
+    Fecha: '354634',
+    Nombre: 'brayan',
+    PresupuestoAS: '12234',
+    Responsable: 'skjdhf',
+    Estado: 'aprovado'
+  },
+  {
+    Identificador: '13579',
+    Fecha: '354634',
+    Nombre: 'brayan',
+    PresupuestoAS: '12234',
+    Responsable: 'skjdhf',
+    Estado: 'aprovado'
+  },
+  {
+    Identificador: '246809',
+    Fecha: '354634',
+    Nombre: 'brayan',
+    PresupuestoAS: '12234',
+    Responsable: 'skjdhf',
+    Estado: 'aprovado'
+  }
+];
 
 export default function Solicitudes() {
-    return (
-        <div className='solicitudes'>
-                  <TableContainer>
+  return (
+    <div className='solicitudes'>
+      <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
@@ -40,21 +40,19 @@ export default function Solicitudes() {
               <TableCell>Nombre</TableCell>
               <TableCell>Presupuesto Solicitado</TableCell>
               <TableCell>Responsable</TableCell>
-              <TableCell>Presupuesto a aprobar</TableCell>
               <TableCell>Estado</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {Tabla.map(Celda=>(
-            <TableRow>
-              <TableCell>{Celda.Identificador}</TableCell>
-              <TableCell>{Celda.Fecha}</TableCell>
-              <TableCell>{Celda.Nombre}</TableCell>
-              <TableCell>{Celda.PresupuestoAS}</TableCell>
-              <TableCell>{Celda.Responsable}</TableCell>
-              <TableCell>{Celda.Presupuesto}</TableCell>
-              <TableCell>{Celda.Estado}</TableCell>
-            </TableRow>
+            {Tabla.map((Celda, index) => (
+              <TableRow key={Celda.Identificador}>
+                <TableCell>{Celda.Identificador}</TableCell>
+                <TableCell>{Celda.Fecha}</TableCell>
+                <TableCell>{Celda.Nombre}</TableCell>
+                <TableCell>{Celda.PresupuestoAS}</TableCell>
+                <TableCell>{Celda.Responsable}</TableCell>
+                <TableCell>{Celda.Estado}</TableCell>
+              </TableRow>
 
             ))}
           </TableBody>
@@ -62,8 +60,8 @@ export default function Solicitudes() {
       </TableContainer>
 
 
-     
-            
-        </div>
-    )
+
+
+    </div>
+  )
 }
