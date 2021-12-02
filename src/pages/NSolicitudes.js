@@ -1,111 +1,133 @@
-import React from 'react'
-import { InputLabel, MenuItem, OutlinedInput, Select } from '@material-ui/core';
-import './Pages.css';
-import { TextField } from '@material-ui/core';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import { blue, grey } from '@material-ui/core/colors';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import React, { Fragment, useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Card, FloatingLabel, Form } from 'react-bootstrap'
+import Stack from 'react-bootstrap/Stack'
 import { makeStyles } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl';
-import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import './Pages.css';
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
+import Button from 'react-bootstrap/Button'
 
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: blue['400'],
-        },
-        secondary: {
-            main: grey['50'],
-        },
-
-    },
-});
 const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
     },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 165,
     },
-
 }));
 
 
 
-const NSolicitudes = () => {
+export default function NSolicitudes() {
     const classes = useStyles();
+    const [date, setDate] = useState()
+    const [aprob, setAprob] = useState({
+        documento: '',
+        nombre: '',
+        fecha: '',
+        presuepuesto: '',
+        division: '',
+        correo: ''
 
+    })
+    const handleInputChange = (event) => {
+        //console.log(event.target.value)
+        setAprob({
+            ...aprob,
+            [event.target.name]: event.target.value
+        })
+    }
+    const envio = (event) => {
+        event.preventDefault();
+        console.log(aprob.documento + ' ' + aprob.nombre + ' ' + aprob.fecha + ' ' + aprob.presuepuesto + ' ' + aprob.division + ' ' + date + ' ' + aprob.correo)
+        console.log(aprob)
+    }
     return (
-        <>
-            <div>
-                <Paper style={{ width: "700px", height: "500px" }} elevation={3} className="paper">
-                    <h1 className="titulo" >Nueva solicitud </h1>
-                    <form>
-                        <div className="text1">
-                            <ThemeProvider theme={theme} >
-                                <TextField
-                                    id="outlined-primary"
-                                    label="Documento"
-                                    variant="outlined"
-                                    color="primary"
-                                />
-                                <TextField
-                                    id="outlined-primary"
-                                    label="Nombre Completo"
-                                    variant="outlined"
-                                    color="primary"
-                                />
+        <Fragment>
+            <form className="row" onSubmit={envio}>
 
-                            </ThemeProvider>
-                        </div>
-                        <div className="text2">
-                            <div>
+                <div className="formulario" >
+                    <Card border="primary" style={{ width: '32rem' }} className=" mx-auto">
+                        <Card body className="text-center" >
+                            <Stack className="mb-4" as="h5" >
+                                Nueva Solicitud
+                            </Stack>
+
+                            <Stack direction="horizontal" gap={5} className="mb-4">
+                                <FloatingLabel controlId="floatingTextarea" label="Documento"  >
+
+                                    <Form.Control placeholder="Documento" name="documento" type="text" onChange={handleInputChange} />
+
+                                </FloatingLabel>
+
+                                <FloatingLabel controlId="floatingTextarea" label="Nombre Completo" style={{ width: '19rem' }} >
+                                    <Form.Control placeholder="Nombre completo" name="nombre" onChange={handleInputChange} />
+                                </FloatingLabel>
+                            </Stack>
+
+                            <Stack direction="horizontal" gap={5} className="mb-4" >
                                 <TextField
                                     id="date"
                                     label="Fecha"
                                     type="date"
                                     defaultValue="2022-01-01"
+                                    name="fecha"
+                                    className={classes.textField}
+                                    onChange={handleInputChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                 />
-                            </div>
-                            <div>
-                                <InputLabel htmlFor="outlined-adornment-amount">Presupuesto Solicitado</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-amount"
-                                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                    labelWidth={200}
+                                <FloatingLabel controlId="floatingTextarea" label="Presupuesto Solicitado" style={{ width: '15.4rem' }} >
+                                    <Form.Control placeholder="Presupuesto Solicitado" type="number" name="presupuesto" onChange={handleInputChange} />
+                                </FloatingLabel>
+
+
+
+                            </Stack>
+                            <Stack direction="horizontal" gap={5} className="mb-4" >
+                                <Form.Select aria-label="Default select example" style={{ width: '11.2rem' }} name="division" onChange={handleInputChange}>
+
+                                    <option>División</option>
+                                    <option value="BPN">BPN</option>
+                                    <option value="INI">INI</option>
+                                    <option value="UM">UM</option>
+                                </Form.Select>
+
+                                <PhoneInput style={{ width: '15rem', height: '2rem' }}
+                                    placeholder="Celular"
+
+                                    value={date}
+                                    onChange={setDate}
+
                                 />
-                            </div>
-                        </div>
-                        <div className="text3">
-                            <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-outlined-label">Division</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-outlined-label"
-                                    id="demo-simple-select-outlined"
-                                    label="Division"
-                                >
-                                    <MenuItem value={10}>BPM</MenuItem>
-                                    <MenuItem value={20}>INI</MenuItem>
-                                    <MenuItem value={30}>UM</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </div>
-                        <dic className="enviar">
-                            <Button variant="contained" color="primary">
-                                Enviar
-                            </Button>
-                        </dic>
-                    </form>
-                </Paper>
-            </div >
-        </ >
+
+
+                            </Stack>
+
+                            <Stack direction="horizontal"  >
+                                <FloatingLabel controlId="floatingTextarea" label="Correo Electronico" style={{ width: '29rem' }} className="mb-4" >
+                                    <Form.Control placeholder="Correo Electronico" name="correo" onChange={handleInputChange} />
+                                </FloatingLabel>
+
+                            </Stack>
+                            <Stack className=" mx-auto" >
+                                <Button as="input" type="submit" value="Enviar" className=" mx-auto" onChange={handleInputChange} />
+                            </Stack>
+
+                        </Card >
+                    </Card>
+                </div >
+            </form>
+        </Fragment>
     )
 }
 
-export default NSolicitudes
 
 
 
