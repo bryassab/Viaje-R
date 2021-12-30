@@ -37,15 +37,23 @@ export default function NSolicitudes() {
     })
     const handleInputChange = (event) => {
         //console.log(event.target.value)
+
         setAprob({
             ...aprob,
             [event.target.name]: event.target.value
         })
+
+
+
     }
     const envio = (event) => {
+
+        setAprob({ ...aprob, "numero": date });
+
         event.preventDefault();
         console.log(aprob.documento + ' ' + aprob.nombre + ' ' + aprob.fecha + ' ' + aprob.presuepuesto + ' ' + aprob.division + ' ' + date + ' ' + aprob.correo)
         console.log(aprob)
+        event.target.reset()
     }
     return (
         <Fragment>
@@ -53,7 +61,7 @@ export default function NSolicitudes() {
 
                 <div className="formulario" >
                     <Card border="primary" style={{ width: '32rem' }} className=" mx-auto">
-                        <Card body className="text-center" >
+                        <Card className="text-center" >
                             <Stack className="mb-4" as="h5" >
                                 Nueva Solicitud
                             </Stack>
@@ -101,7 +109,7 @@ export default function NSolicitudes() {
 
                                 <PhoneInput style={{ width: '15rem', height: '2rem' }}
                                     placeholder="Celular"
-
+                                    name="numero"
                                     value={date}
                                     onChange={setDate}
 

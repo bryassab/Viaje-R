@@ -155,10 +155,10 @@ function Navbar() {
                     <ListItem
                         button
                         component={Link}
-                        to="/"
+                        to="/ngastos"
 
                     >
-                        <ListItemText>Gastos</ListItemText>
+                        <ListItemText>Registrar Gastos</ListItemText>
                     </ListItem>
 
                 </List>

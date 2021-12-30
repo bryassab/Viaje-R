@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import Solicitudes from './pages/Solicitudes'
 import NSolicitudes from './pages/NSolicitudes'
 import Aprobar from './pages/Aprobar';
-
+import NGastos from './pages/NGastos';
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
           <Route path='/solicitudes' element={<Solicitudes />} />
           <Route path='/nsolicitudes' element={<NSolicitudes />} />
           <Route path='/aprobar' element={<Aprobar />} />
+          <Route path='/ngastos' element={<NGastos />} />
         </Routes>
       </Router>
     </>
