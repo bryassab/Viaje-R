@@ -7,6 +7,8 @@ import NSolicitudes from './pages/NSolicitudes'
 import Aprobar from './pages/Aprobar';
 import NGastos from './pages/NGastos';
 import Gastos from './pages/Gastos';
+
+
 function App() {
   return (
     <>
