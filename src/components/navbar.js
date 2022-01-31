@@ -166,7 +166,7 @@ function Navbar() {
                         to="/gastos"
 
                     >
-                        <ListItemText> Gastos</ListItemText>
+                        <ListItemText>Gastos</ListItemText>
                     </ListItem>
 
                 </List>

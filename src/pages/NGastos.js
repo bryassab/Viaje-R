@@ -3,20 +3,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, FloatingLabel, Stack, Form } from 'react-bootstrap'
 import TextField from '@material-ui/core/TextField';
 import Button from 'react-bootstrap/Button'
-
+import axios from 'axios';
 
 
 export default function NGastos() {
-
+    const [data, setData] = useState([])
     const [num, setNum] = useState({
         fecha: '',
         nombre: '',
         proveedor: '',
-        transporte: '',
+        transportes: '',
         hotel: '',
         alimentacion: '',
         otros: '',
-        total: 0,
+        total: '',
         descripcion: ''
     });
     const handleInput = (event) => {
@@ -30,14 +30,24 @@ export default function NGastos() {
 
 
 
-    const Rgasto = (event) => {
-        var total = ((+num.transporte) + (+num.hotel) + (+num.alimentacion) + (+num.otros))
+    const Rgasto = async (event) => {
+        var total = ((+num.transportes) + (+num.hotel) + (+num.alimentacion) + (+num.otros))
         setNum({ ...num, total })
         var envio = num;
         envio.total = total;
         event.preventDefault();
         event.target.reset();
-        console.log(num)
+        await GastosPost();
+
+    }
+    const GastosPost = async () => {
+        delete num.id;
+
+
+        await axios.post(`/api/nGastos/`, num)
+            .then(newdata => {
+                setData(data.concat(newdata.data))
+            })
     }
 
     return (
@@ -75,8 +85,8 @@ export default function NGastos() {
 
                             </Stack>
                             <Stack direction="horizontal" className="mb-4" style={{ justifyContent: "space-around" }}>
-                                <FloatingLabel controlId="floatingTextarea" label="Transporte" style={{ width: '10rem' }} >
-                                    <Form.Control placeholder="Transporte" type="number" name="transporte" onChange={handleInput} />
+                                <FloatingLabel controlId="floatingTextarea" label="Transportes" style={{ width: '10rem' }} >
+                                    <Form.Control placeholder="Transportes" type="number" name="transportes" onChange={handleInput} />
                                 </FloatingLabel>
 
                                 <FloatingLabel controlId="floatingTextarea" label="Hotel" style={{ width: '10rem' }} >

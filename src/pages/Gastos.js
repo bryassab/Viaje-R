@@ -1,39 +1,19 @@
-import React from 'react'
+﻿import React, { useEffect, useState } from 'react'
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core'
+import axios from 'axios';
 
-const Tabla = [
-    {
-        Documento: '1234',
-        Nombre: '354634',
-        Fecha: 'brayan',
-        PresupuestoS: '12234',
-        Division: 'skjdhf',
-        Telefono: 'aprovado',
-        Correo: 'aprovado',
-        Estado: 'aprovado'
-    },
-    {
-        Documento: '13579',
-        Nombre: '354634',
-        Fecha: 'brayan',
-        PresupuestoS: '12234',
-        Division: 'skjdhf',
-        Telefono: 'aprovado',
-        Correo: 'aprovado',
-        Estado: 'aprovado'
-    },
-    {
-        Documento: '246809',
-        Nombre: '354634',
-        Fecha: 'brayan',
-        PresupuestoS: '12234',
-        Division: 'skjdhf',
-        Telefono: 'aprovado',
-        Correo: 'aprovado',
-        Estado: 'aprovado'
-    }
-];
 export default function Gastos() {
+    const [data, setData] = useState([]);
+    const GastosGet = async () => {
+        await axios.get(`api/ngastos`)
+            .then(gastosget => {
+                setData(gastosget.data)
+            })
+    }
+    useEffect(() => {
+        GastosGet();
+    },[])
+
     return (
         <div className="gastos">
             <TableContainer>
@@ -52,16 +32,17 @@ export default function Gastos() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {Tabla.map((Celda, index) => (
-                            <TableRow key={Celda.Documento}>
-                                <TableCell>{Celda.Fecha}</TableCell>
-                                <TableCell>{Celda.Nombre}</TableCell>
-                                <TableCell>{Celda.Descripcion}</TableCell>
-                                <TableCell>{Celda.Proveedor}</TableCell>
-                                <TableCell>{Celda.Division}</TableCell>
-                                <TableCell>{Celda.Telefono}</TableCell>
-                                <TableCell>{Celda.Correo}</TableCell>
-                                <TableCell>{Celda.Estado}</TableCell>
+                        {data.map((Celda, index) => (
+                            <TableRow key={Celda.id}>
+                                <TableCell>{Celda.fecha}</TableCell>
+                                <TableCell>{Celda.nombre}</TableCell>
+                                <TableCell>{Celda.descripcion}</TableCell>
+                                <TableCell>{Celda.proveedor}</TableCell>
+                                <TableCell>{Celda.alimentacion}</TableCell>
+                                <TableCell>{Celda.transportes}</TableCell>
+                                <TableCell>{Celda.hotel}</TableCell>
+                                <TableCell>{Celda.otros}</TableCell>
+                                <TableCell>{Celda.total}</TableCell>
                             </TableRow>
 
                         ))}

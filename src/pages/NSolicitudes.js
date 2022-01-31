@@ -8,6 +8,9 @@ import './Pages.css';
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import Button from 'react-bootstrap/Button'
+import axios from 'axios';
+
+
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -24,44 +27,64 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function NSolicitudes() {
+    const [data, setData] = useState([])
     const classes = useStyles();
     const [date, setDate] = useState()
     const [aprob, setAprob] = useState({
         documento: '',
         nombre: '',
-        fecha: '',
-        presuepuesto: '',
+        fecha: '2022-01-01',
+        presupuesto_solicitado: '',
         division: '',
-        correo: ''
-
+        correo: '',
+        telefono: ''
     })
+
     const handleInputChange = (event) => {
-        //console.log(event.target.value)
 
-        setAprob({
-            ...aprob,
-            [event.target.name]: event.target.value
-        })
+        if (event?.target != null) {
+            setAprob({
+                ...aprob,
+                [event.target.name]: event.target.value
+            })
+        } else {
+            setAprob({
+                ...aprob,
+                telefono: event
 
-
+            });
+        }
 
     }
-    const envio = (event) => {
 
-        setAprob({ ...aprob, "numero": date });
+    const envio = async (event) => {
 
         event.preventDefault();
-        console.log(aprob.documento + ' ' + aprob.nombre + ' ' + aprob.fecha + ' ' + aprob.presuepuesto + ' ' + aprob.division + ' ' + date + ' ' + aprob.correo)
-        console.log(aprob)
-        event.target.reset()
+        setDate("")
+        event.target.reset();
+        await peticionPost();
+
     }
+
+    const peticionPost = async () => {
+        delete aprob.id;
+
+
+        await axios.post(`/api/gestor/`, aprob)
+            .then(aprobarn => {
+                setData(data.concat(aprobarn.data))
+            })
+    }
+
+
+
     return (
         <Fragment>
-            <form className="row" onSubmit={envio}>
+            <form className="row" onSubmit={envio} >
 
                 <div className="formulario" >
                     <Card border="primary" style={{ width: '32rem' }} className=" mx-auto">
-                        <Card className="text-center" >
+                        <Card body className="text-center" >
                             <Stack className="mb-4" as="h5" >
                                 Nueva Solicitud
                             </Stack>
@@ -92,7 +115,7 @@ export default function NSolicitudes() {
                                     }}
                                 />
                                 <FloatingLabel controlId="floatingTextarea" label="Presupuesto Solicitado" style={{ width: '15.4rem' }} >
-                                    <Form.Control placeholder="Presupuesto Solicitado" type="number" name="presupuesto" onChange={handleInputChange} />
+                                    <Form.Control placeholder="Presupuesto Solicitado" type="number" name="presupuesto_solicitado" onChange={handleInputChange} />
                                 </FloatingLabel>
 
 
@@ -108,10 +131,11 @@ export default function NSolicitudes() {
                                 </Form.Select>
 
                                 <PhoneInput style={{ width: '15rem', height: '2rem' }}
+
                                     placeholder="Celular"
-                                    name="numero"
+                                    name="telefono"
                                     value={date}
-                                    onChange={setDate}
+                                    onChange={handleInputChange}
 
                                 />
 
@@ -125,7 +149,7 @@ export default function NSolicitudes() {
 
                             </Stack>
                             <Stack className=" mx-auto" >
-                                <Button as="input" type="submit" value="Enviar" className=" mx-auto" onChange={handleInputChange} />
+                                <Button as="input" type="submit" value="Enviar" className=" mx-auto" />
                             </Stack>
 
                         </Card >
